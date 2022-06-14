@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-
+from __future__ import division
 from tkinter import Tk, Frame, BOTH, Text, TOP, BOTH, X, N, LEFT
 from tkinter.ttk import Button, Style
 from tkinter import *
+
 
 
 root = Tk()
@@ -124,8 +125,9 @@ class Window(Frame):
         labelHtext.pack(side=LEFT)
 
         #diem tinh H
-        entryH = Entry(frame5, width=10)
-        entryH.pack(side=LEFT, padx=10)
+
+        labelHcal = Label(frame5, text= "", font=('Tahoma', 11))
+        labelHcal.pack(side=LEFT, padx=10)
 
         #add frame 6
         frame6 = Frame(self)
@@ -728,7 +730,122 @@ class Window(Frame):
             labelValueP = Label(frame9, text='', font=('Tahoma',11))
             labelValueP.grid(row=13, column=3)
 
+        #hàm giao diện H
+        def calculateH(self):
+            frame8 = Frame(self)
+            frame8.pack(fill=X, padx=25)
+            labelTCFhead = Label(frame8, text="Bảng tính toán hệ số phức tạp KT-CN", font=('Tahoma', 14))
+            labelTCFhead.pack(side=TOP)
 
+            frame9 = Frame(self)
+            frame9.pack(fill=X, padx=25)
+
+            #cột 1 - STT
+            label01 = Label(frame9, text='TT', font=('Tahoma',11))
+            label01.grid(row=1, column=1)
+
+            label11 = Label(frame9, text='1', font=('Tahoma',11))
+            label11.grid(row=2, column=1)
+
+            label21 = Label(frame9, text='2', font=('Tahoma',11))
+            label21.grid(row=3, column=1)
+
+            label31 = Label(frame9, text='3', font=('Tahoma',11))
+            label31.grid(row=4, column=1)
+
+            label41 = Label(frame9, text='4', font=('Tahoma',11))
+            label41.grid(row=5, column=1)
+
+            label51 = Label(frame9, text='5', font=('Tahoma',11))
+            label51.grid(row=6, column=1)
+
+
+            #cột 2 -'Mức lương/tháng (đồng)'
+            label02 = Label(frame9, text='Mức lương/tháng (đồng)', font=('Tahoma',11))
+            label02.grid(row=1, column=2, sticky='w')
+
+            entry12 = Entry(frame9, width=10)
+            entry12.grid(row=2, column=2)
+            
+            entry22 = Entry(frame9, width=10)
+            entry22.grid(row=3, column=2)
+
+            entry32 = Entry(frame9, width=10)
+            entry32.grid(row=4, column=2)
+
+            entry42 = Entry(frame9, width=10)
+            entry42.grid(row=5, column=2)
+
+            entry52 = Entry(frame9, width=10)
+            entry52.grid(row=6, column=2)
+
+
+            #cột 3 - Trọng số
+            label03 = Label(frame9, text='Số lượng cán bộ', font=('Tahoma',11))
+            label03.grid(row=1, column=3)
+
+            entry13 = Entry(frame9, width=10)
+            entry13.grid(row=2, column=3)
+            
+            entry23 = Entry(frame9, width=10)
+            entry23.grid(row=3, column=3)
+
+            entry33 = Entry(frame9, width=10)
+            entry33.grid(row=4, column=3)
+
+            entry43 = Entry(frame9, width=10)
+            entry43.grid(row=5, column=3)
+
+            entry53 = Entry(frame9, width=10)
+            entry53.grid(row=6, column=3)
+
+
+            def calculateH():
+                float1 = float(entry12.get())
+                float2 = float(entry22.get())
+                float3 = float(entry32.get())
+                float4 = float(entry42.get())
+                float5 = float(entry52.get())
+                float6 = float(entry13.get())
+                float7 = float(entry23.get())
+                float8 = float(entry33.get())
+                float9 = float(entry43.get())
+                float10 = float(entry53.get())
+
+                floatListLuong = [float1, float2, float3, float4, float5]
+                floatListCanbo = [float6, float7, float8, float9, float10]
+                TongLuongThang = 0
+                for i in range(len(floatListLuong)):
+                    TongLuongThang += floatListLuong[i] * floatListCanbo[i]
+                
+                LuongBQNguoi_thang = TongLuongThang/(sum(floatListCanbo)) 
+                H = (LuongBQNguoi_thang/26) / 8
+                labelValueTongLuong.configure(text=str(TongLuongThang))
+                labelValueLuongBinhQuan.configure(text=str(LuongBQNguoi_thang))
+                labelValueH.configure(text=str(H))
+                labelHcal.configure(text=str(H))
+                
+
+            btnTinhtext = Button(frame9, text='Tính', font=('Tahoma', 11), command=calculateH)
+            btnTinhtext.grid(row=7, column=1)
+
+            labelTongLuong = Label(frame9, text='Tổng chi lương/tháng		 = ', font=('Tahoma',11))
+            labelTongLuong.grid(row=7, column=2, sticky='w')
+
+            labelValueTongLuong = Label(frame9, text='', font=('Tahoma',11))
+            labelValueTongLuong.grid(row=7, column=3)
+
+            labelLuongBQ = Label(frame9, text='Mực lương bình quân/người/tháng = ', font=('Tahoma',11))
+            labelLuongBQ.grid(row=8, column=2, sticky='w')
+            labelValueLuongBinhQuan = Label(frame9, text='', font=('Tahoma',11))
+            labelValueLuongBinhQuan.grid(row=8, column=3)
+
+            labelLuongH = Label(frame9, text='H = ', font=('Tahoma',11))
+            labelLuongH.grid(row=9, column=2, sticky='w')
+            labelValueH = Label(frame9, text='', font=('Tahoma',11))
+            labelValueH.grid(row=9, column=3)
+
+        #hàm tính toán giá trị EF và P
 
 
         #hàm mở cửa số TBF
@@ -768,17 +885,27 @@ class Window(Frame):
 
             calculateEF_P(self=newWindow)
 
+        #Hàm mở cửa sổ H
+        def openNewWindowH():
+            newWindow = Toplevel(root)
+            newWindow.title("New Window")
+ 
+            newWindow.geometry("800x500+300+300")
+
+            calculateH(self=newWindow)
+
 
         def Tinh():
                 UUCP = float(label4.cget("text")) + float(label6.cget("text"))
                 label8.configure(text=str(UUCP))
                 AUCP = UUCP * float(label10.cget("text")) * float(labelEFfill.cget("text"))
                 label14.configure(text=str(AUCP))
-                E = 10/6 * AUCP
+                E = float(10/6 * AUCP)
                 labelE.configure(text=str(E))
-                G = float(entryH.get()) * 1.4 * E * float(labelP.cget("text"))
+                G = float(labelHcal.cget("text")) * 1.4 * E * float(labelP.cget("text"))
                 labelG.configure(text=str(G))
 
+        
 
 
 
@@ -793,6 +920,8 @@ class Window(Frame):
         TCFButton.pack(side=LEFT, padx=5, pady=5)
         EFButton = Button(frame7, text="EF", command=openNewWindowEF_P)
         EFButton.pack(side=LEFT)
+        HButton = Button(frame7, text="H", command=openNewWindowH)
+        HButton.pack(side=LEFT)
         # TAWCalculate()
         # TBFCalculate()
          #Nút Tính
